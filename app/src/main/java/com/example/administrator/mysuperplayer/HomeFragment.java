@@ -60,6 +60,7 @@ public class HomeFragment extends BaseFragment {
                         break;
 
                     default:
+                        DetailListActivity.LaunchDetailListActivity(getActivity(),i+1);
                         break;
                 }
             }

@@ -83,6 +83,7 @@ public class HomeActivity extends BaseActivity {
                 mMenuItem = item;
                 mDrawerLayout.closeDrawer(Gravity.LEFT);
                 item.setChecked(true);
+                item.setCheckable(true);
                 return false;
             }
         });
