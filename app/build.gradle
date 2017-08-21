@@ -28,6 +28,8 @@ dependencies {
     compile 'com.android.support:cardview-v7:23.1.1'
     compile 'com.android.support:design:23.1.1'
     compile 'de.hdodenhof:circleimageview:2.1.0'
+    compile 'com.google.code.gson:gson:2.2.4'
+    compile 'com.squareup.okhttp3:okhttp:3.6.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.hejunlin.superindicatorlibray:superindicatorlibray:1.0.3'
     testCompile 'junit:junit:4.12'

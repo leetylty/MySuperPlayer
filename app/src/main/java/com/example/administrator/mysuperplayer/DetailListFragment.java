@@ -65,7 +65,7 @@ public class DetailListFragment extends BaseFragment {
     protected void initView() {
         emptyView = bindView(R.id.tv_empty);
         emptyView.setText(getActivity().getResources().getString(R.string.load_more_text));
-       mpullloadrecyclerview =   bindView(R.id.pullloadrecyclerview);
+        mpullloadrecyclerview =   bindView(R.id.pullloadrecyclerview);
         mpullloadrecyclerview.setGravity(3);
         mpullloadrecyclerview.SetAdapter(mAdapter);
         mpullloadrecyclerview.setOnPullLoadMoreListener(new PullLoadMoreListener());

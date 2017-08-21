@@ -33,8 +33,16 @@ public class Site {
     }
 
 
+    public int getSiteId() {
+        return siteId;
+    }
+
+    public void setSiteId(int siteId) {
+        this.siteId = siteId;
+    }
 
     public Site(int id, Context context) {
+
         siteId =id;
         mContext= context;
         switch (siteId){
