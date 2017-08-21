@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.ViewGroup;
 
@@ -21,6 +22,7 @@ import java.util.HashMap;
 
 public class DetailListActivity extends BaseActivity {
      public  static  final  String CHANNID="channid";
+     public  static  final String TAG ="DetailListActivity";
      private int mChannId;
      private ViewPager mDetailViewPager;
     @Override
@@ -38,7 +40,8 @@ public class DetailListActivity extends BaseActivity {
          String titleName = channel.getChanneName();
         setSupportActionBar();//表示允许actionBar
         setSupportArrowActionBar(true);
-        mToolbar.setTitle(titleName);
+        setTitle(titleName);
+       // Log.i(TAG,"--->>>>TitleName="+titleName);
         mDetailViewPager = bindView(R.id.detail_pager);
         mDetailViewPager.setAdapter(new SitePagerAdapter(getSupportFragmentManager(),this,mChannId));
 
