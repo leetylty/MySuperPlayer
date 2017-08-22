@@ -49,8 +49,8 @@ public  class Album implements Parcelable {
         return AlubmIdl;
     }
 
-    public void setAlubmIdl(String alubmIdl) {
-        AlubmIdl = alubmIdl;
+    public void setAlubmId(String alubmId) {
+        AlubmIdl = alubmId;
     }
 
     public int getVideototal() {
