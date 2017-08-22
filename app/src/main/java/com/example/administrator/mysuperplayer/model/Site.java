@@ -21,7 +21,7 @@ public class Site {
 
     private int siteId;
     private String siteName;
-    private Context mContext;
+
 
     public int getChannelId() {
         return siteId;
@@ -41,16 +41,16 @@ public class Site {
         this.siteId = siteId;
     }
 
-    public Site(int id, Context context) {
+    public Site(int id) {
 
         siteId =id;
-        mContext= context;
+
         switch (siteId){
             case LETV:
-                siteName = mContext.getResources().getString(R.string.site_letv);
+                siteName = "乐视视频";
                 break;
             case SOHU:
-                siteName = mContext.getResources().getString(R.string.site_sohu);
+                siteName = "搜狐视频";
                 break;
 
         }

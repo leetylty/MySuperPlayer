@@ -6,19 +6,26 @@ import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
+import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.administrator.mysuperplayer.api.OnGetChannelAlbumsListener;
+import com.example.administrator.mysuperplayer.api.SiteApi;
 import com.example.administrator.mysuperplayer.base.BaseFragment;
+import com.example.administrator.mysuperplayer.model.Album;
+import com.example.administrator.mysuperplayer.model.ErrorInfo;
 import com.example.administrator.mysuperplayer.model.Site;
 import com.example.administrator.mysuperplayer.widget.PullLoadRecyclerView;
+
+import java.util.ArrayList;
 
 /**
  * Created by Administrator on 2017/8/18.
  */
 
 public class DetailListFragment extends BaseFragment {
+    private static final String TAG ="DetailListFragment";
     private static  int msiteId;
     private static int mChannId;
     public static final String CHANN_ID ="channid";
@@ -30,6 +37,8 @@ public class DetailListFragment extends BaseFragment {
     private Handler mHandler = new Handler(Looper.getMainLooper());
     public static final  int REFRESH=1500;
     public static final  int LOADMORE=3000;
+    private int pageNo;
+    private int pageSize=30;
 
 
     public DetailListFragment (){
@@ -40,6 +49,7 @@ public class DetailListFragment extends BaseFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        pageNo=0;
         LoadData();
         mAdapter = new DetailListAdapter();
         if (msiteId == Site.LETV){
@@ -100,8 +110,23 @@ public class DetailListFragment extends BaseFragment {
 
         }
     }
-    //加载更多
+    //加载数据
     private void LoadData() {
+        pageNo++;
+        SiteApi.onGetChannelAlbums(getActivity(), pageNo, pageSize, 2, mChannId, new OnGetChannelAlbumsListener() {
+            @Override
+            public void OnGetChannelSuccess(ArrayList<Album> albumList) {
+                for (Album album : albumList){
+                    Log.i(TAG,">>>album-----"+album.toString());
+                }
+            }
+
+            @Override
+            public void OnGetChannelFail(ErrorInfo errorInfo) {
+
+            }
+        });
+
     }
 
     //刷新数据

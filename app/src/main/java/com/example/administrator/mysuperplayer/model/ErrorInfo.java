@@ -1,6 +1,5 @@
 package com.example.administrator.mysuperplayer.model;
 
-import com.example.administrator.mysuperplayer.AppManager;
 import com.google.gson.annotations.Expose;
 
 /**
@@ -46,7 +45,7 @@ public class ErrorInfo {
     }
 
     public ErrorInfo(int siteId, int type) {
-        site = new Site(siteId, AppManager.getcontext());
+        site = new Site(siteId);
     }
 
     public int getType() {

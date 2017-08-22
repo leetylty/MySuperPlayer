@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.ViewGroup;
 
@@ -86,7 +85,7 @@ public class DetailListActivity extends BaseActivity {
 
         @Override
         public Fragment getItem(int position) {
-            Fragment fragment = DetailListFragment.newInstance(new Site(1,mContext).getChannelId(),mChannId);
+            Fragment fragment = DetailListFragment.newInstance(new Site(1).getChannelId(),mChannId);
             return fragment;
         }
 

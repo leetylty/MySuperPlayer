@@ -1,6 +1,5 @@
 package com.example.administrator.mysuperplayer.model;
 
-import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -24,7 +23,7 @@ public  class Album implements Parcelable {
     private String tip; //提示
     private boolean isCompleted;//是否已经播完
     private String letvStyle; //乐视特殊字段
-    private Context mContext;
+
 
 
     public static final  Parcelable.Creator<Album> CREATOR = new Parcelable.Creator<Album>(){
@@ -40,9 +39,9 @@ public  class Album implements Parcelable {
         }
     };
 
-    public Album(int siteId, Context context) {
-     site = new Site(siteId,mContext);
-        mContext= context;
+    public Album(int siteId) {
+     site = new Site(siteId);
+
     }
 
     public String getAlubmIdl() {
@@ -167,7 +166,7 @@ public  class Album implements Parcelable {
         this.letvStyle = in.readString();
         this.alubmDesc = in.readString();
         this.SubTitle = in.readString();
-        this.site = new Site(in.readInt(),mContext);
+        this.site = new Site(in.readInt());
         this.isCompleted = in.readByte()!=0 ;
     }
 
@@ -206,7 +205,6 @@ public  class Album implements Parcelable {
                 ", tip='" + tip + '\'' +
                 ", isCompleted=" + isCompleted +
                 ", letvStyle='" + letvStyle + '\'' +
-                ", mContext=" + mContext +
                 '}';
     }
 

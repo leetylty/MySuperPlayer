@@ -18,7 +18,7 @@ public class OkHttpUtil {
             Request  request =  new Request.Builder().tag(TAG)
                     .url(url)
                     .build();
-            return null;
+            return request;
         }
         return null;
     }

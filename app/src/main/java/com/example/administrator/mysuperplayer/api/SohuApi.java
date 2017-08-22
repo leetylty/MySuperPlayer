@@ -29,8 +29,11 @@ public class SohuApi extends BaseSiteApi {
     private static final int SOHU_CHANNELID_COMIC = 16; //搜狐动漫频道ID
     private static final int SOHU_CHANNELID_MUSIC = 24; //搜狐音乐频道ID
     private static final String API_CHANNEL_ABLUM_FORMAT ="http://api.tv.sohu.com/v4/search/channel.json" +
-            "?cid=%s&o=1&plat=6&poid=1&api_key=9854b2afa779e1a6bff1962447a09dbd&" +
-            "sver=6.2.0&sysver=4.4.2&partner=47&page=%s&page_size=%s";
+            "?cid=2&o=1&plat=6&poid=1&api_key=9854b2afa779e1a6bff1962447a09dbd&" +
+            "sver=6.2.0&sysver=4.4.2&partner=47&page=1&page_size=1";
+
+    //http://api.tv.sohu.com/v4/album/videos/9112373.json?page=1&page_size=50&order=0&site=1&with_trailer=1&plat=6&poid=1&api_key=9854b2afa779e1a6bff1962447a09dbd&sver=6.2.0&sysver=4.4.2&partner=47
+
 
     @Override
     public void onGetChannelAlbums(Channel channel, int pageNum, int pageSize, OnGetChannelAlbumsListener listener) {
@@ -75,11 +78,12 @@ public class SohuApi extends BaseSiteApi {
     }
 
     //存入ResultAlbum数据
-    private AlbumList toConverAlbumList(Result result) {
-        AlbumList albumList =new AlbumList();
-        if (result.getData().getResultAlbumList().size()>0){
-            for (ResultAlbum resultAlbum :result.getData().getResultAlbumList()){
-                Album album = new Album(Site.SOHU,AppManager.getcontext());
+    private AlbumList toConverAlbumList(Result mresult) {
+
+        if (mresult.getData().getResultAlbumList().size()>0){
+           AlbumList albumList = new AlbumList();
+            for (ResultAlbum resultAlbum :mresult.getData().getResultAlbumList()){
+                Album album = new Album(Site.SOHU);
                 album.setAlubmDesc(resultAlbum.getTvDesc());
                 album.setAlubmId(resultAlbum.getAlbumId());
                 album.setHorImgUrl(resultAlbum.getHorHighPic());
@@ -90,9 +94,9 @@ public class SohuApi extends BaseSiteApi {
                 album.setDirctor(resultAlbum.getDirector());
                 albumList.add(album);
             }
-
+            return albumList;
         }
-        return albumList;
+        return null;
     }
 
     private ErrorInfo buildErrorInfo(String url,String functionName,Exception e,int type){

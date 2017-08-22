@@ -3,6 +3,7 @@ package com.example.administrator.mysuperplayer.model.sohu;
 import com.example.administrator.mysuperplayer.model.Album;
 import com.example.administrator.mysuperplayer.model.AlbumList;
 import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
@@ -32,6 +33,6 @@ public class Data {
     }
 
     @Expose
-
+    @SerializedName("videos")
     private List<ResultAlbum> resultAlbumList;
 }
