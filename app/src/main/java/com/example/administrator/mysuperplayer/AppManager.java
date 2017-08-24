@@ -16,9 +16,9 @@ import okhttp3.OkHttpClient;
 
 public class AppManager extends Application {
 
-     private static Gson mGosn;
-     private static OkHttpClient mOkHttpClient;
-     private  static Context mContext;
+     public static Gson mGosn;
+     public static OkHttpClient mOkHttpClient;
+     public  static Context mContext;
 
      @Override
      public void onCreate() {

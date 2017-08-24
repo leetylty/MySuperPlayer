@@ -13,8 +13,8 @@ import static com.example.administrator.mysuperplayer.model.Channel.SHOW;
 public class Site {
 
 
-    public static final int LETV = 1;//乐视
-    public static final int SOHU = 2;//搜狐
+    public static final int LETV = 2;//乐视
+    public static final int SOHU = 1;//搜狐
     public static final int MAX_SIZE =2;
 
 
