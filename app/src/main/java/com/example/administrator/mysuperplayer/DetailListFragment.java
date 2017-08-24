@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.administrator.mysuperplayer.api.OnGetChannelAlbumsListener;
 import com.example.administrator.mysuperplayer.api.SiteApi;
@@ -174,6 +175,20 @@ public class DetailListFragment extends BaseFragment {
     //刷新数据
     private void reFreshData() {
         //请求接口 加载数据
+        pageNo = 0;
+        mAdapter = null;
+        mAdapter = new DetailListAdapter(getActivity(), new Channel(mChannId, getActivity()));
+        LoadData();
+        if (msiteId == Site.LETV) {
+            Columns = 2;//乐视频道相关2列
+            mAdapter.SetColumns(Columns);
+
+        } else {
+            Columns = 3;
+            mAdapter.SetColumns(Columns);
+        }
+        mpullloadrecyclerview.SetAdapter(mAdapter);
+        Toast.makeText(getActivity(), "已加载到最新数据", Toast.LENGTH_LONG).show();
 
 
     }

@@ -126,12 +126,6 @@ public class PullLoadRecyclerView extends LinearLayout {
                 }
             }
             //何时上拉加载更多
-
-            if (mSwipeRefreshLayout.isEnabled()){
-                      mSwipeRefreshLayout.setEnabled(true);
-            }else {
-                mSwipeRefreshLayout.setEnabled(false);
-            }
             //1.加载更多是false
             //2.totalcount-1 === lastcount;
             //3.mSwipeRefreshLayout可以使用
@@ -140,10 +134,13 @@ public class PullLoadRecyclerView extends LinearLayout {
             if(!isLoadMore
                     && mSwipeRefreshLayout.isEnabled()
                     && !isReFresh
-                    && totalcount ==lastItem
+                    && totalcount-1 == lastItem
                     && (dx>0 || dy>0)){
                    isLoadMore =true;
+                mSwipeRefreshLayout.setEnabled(false);
                   LoadMoreData();
+            }else {
+                mSwipeRefreshLayout.setEnabled(true);
             }
         }
     }
@@ -203,7 +200,7 @@ public class PullLoadRecyclerView extends LinearLayout {
     }
 
     public void  SetAdapter(RecyclerView.Adapter adapter){
-        if(adapter==null){
+        if(adapter!=null){
             mRecyclerView.setAdapter(adapter);
         }
 
