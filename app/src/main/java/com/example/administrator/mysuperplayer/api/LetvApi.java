@@ -1,5 +1,7 @@
 package com.example.administrator.mysuperplayer.api;
 
+import android.util.Log;
+
 import com.example.administrator.mysuperplayer.model.Album;
 import com.example.administrator.mysuperplayer.model.AlbumList;
 import com.example.administrator.mysuperplayer.model.Channel;
@@ -31,28 +33,40 @@ public class LetvApi extends BaseSiteApi {
     private static final int LETV_CHANNELID_COMIC = 5; //乐视动漫频道ID
     private static final int LETV_CHANNELID_MUSIC = 9; //乐视音乐频道ID
 
+    //http://static.meizi.app.m.letv.com/android/mod/mob/ctl/listalbum/act/index/src/1/cg/2/or/20/vt/180001/ph/420003,420004/pt/-141003/pn/1/ps/30/pcode/010110263/version/5.6.2.mindex.html
     private final static String ALBUM_LIST_URL_FORMAT = "http://static.meizi.app.m.letv.com/android/" +
             "mod/mob/ctl/listalbum/act/index/src/1/cg/%s/ph/420003,420004/pn/%s/ps/%s/pcode/010110263/version/5.6.2.mindex.html";
+
     private final static String ALBUM_LIST_URL_DOCUMENTARY_FORMAT = "http://static.meizi.app.m.letv.com/android/" +
             "mod/mob/ctl/listalbum/act/index/src/1/cg/%s/or/3/ph/420003,420004/pn/%s/ps/%s/pcode/010110263/version/5.6.2.mindex.html";
+
     private final static String ALBUM_LIST_URL_SHOW_FORMAT = "http://static.meizi.app.m.letv.com/android/" +
             "mod/mob/ctl/listalbum/act/index/src/1/cg/%s/or/20/vt/180001/ph/420003,420004/pt/-141003/pn/%s/ps/%s/pcode/010110263/version/5.6.2.mindex.html";
 
     @Override
     public void onGetChannelAlbums(Channel channel, int pageNum, int pageSize, OnGetChannelAlbumsListener listener) {
-          String url = GetChannelUrl(channel,pageNum,pageSize);
-        doGetChannelAlbumByUrl(url,listener);
-            
+        String url = GetChannelUrl(channel,pageNum,pageSize);
+        doGetChannelAlbumByLETVUrl(url,listener);
+
+
+    }
+    private String GetChannelUrl(Channel channel,int pageNum, int pageSize) {
+        if(channel.getChannelId() == Channel.DOCUMENTRY){
+            return String.format(ALBUM_LIST_URL_DOCUMENTARY_FORMAT,ToConvertChannleId(channel),pageNum,pageSize);
+        }else if(channel.getChannelId() == Channel.DOCUMENTRY){
+            return String.format(ALBUM_LIST_URL_SHOW_FORMAT,ToConvertChannleId(channel),pageNum,pageSize);
+        }
+        return String.format(ALBUM_LIST_URL_FORMAT,ToConvertChannleId(channel),pageNum,pageSize);
 
     }
      //进行网络请求
-    private void doGetChannelAlbumByUrl(final String url , final OnGetChannelAlbumsListener listener) {
+    private void doGetChannelAlbumByLETVUrl(final String url , final OnGetChannelAlbumsListener listener) {
         OkHttpUtil.excute(url, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 if(listener!=null){
                     ErrorInfo info = buildErrorInfo(url,"doGetChannelAlbumByUrl",e,ErrorInfo.ERROR_TYPE_URL);
-                    listener.OnGetChannelFail(info);
+                   listener.OnGetChannelFail(info);
                 }
 
             }
@@ -64,33 +78,44 @@ public class LetvApi extends BaseSiteApi {
                     listener.OnGetChannelFail(info);
                     return;
                 }
-                String json = response.body().toString();
-                try {
-                    JSONObject resultJson = new JSONObject(json);
-                    JSONObject bodyJson =   resultJson.optJSONObject("body");
-                    if(bodyJson.getInt("album_count")>0){
-                        AlbumList list = new AlbumList();
-                       JSONArray albumListJson = bodyJson.optJSONArray("album_list");
-                        for (int i =0; i<albumListJson.length();i++){
-                            Album album = new Album(Site.LETV);
-                           JSONObject albumJson = albumListJson.getJSONObject(i);
-                            album.setAlubmId(albumJson.getString("aid"));
-                            album.setAlubmDesc(albumJson.getString("subname"));
-                            album.setTitle(albumJson.getString("name"));
-                            JSONObject jsonImage = albumJson.getJSONObject("images");
-                            //读取400*300字符
-                            String imageurl = StringEscapeUtils.unescapeJava(jsonImage.getString("400*300"));
-                            album.setHorImgUrl(imageurl);
-                            list.add(album);
 
 
+                            String json = response.body().string();
+                            try {
+                                JSONObject resultJson = new JSONObject(json);
+                                JSONObject bodyJson = resultJson.optJSONObject("body");
+                                if (bodyJson.optInt("album_count") > 0) {
+                                    AlbumList list = new AlbumList();
+                                    JSONArray albumListJosn = bodyJson.optJSONArray("album_list");
+                                    for (int i = 0; i< albumListJosn.length(); i++) {
+                                        Album album = new Album(Site.LETV);
+                                        JSONObject albumJson = albumListJosn.getJSONObject(i);
+                                        album.setAlubmId(albumJson.getString("aid"));
+                                        album.setAlubmDesc(albumJson.getString("subname"));
+                                        album.setTitle(albumJson.getString("name"));
+                                        album.setTip(albumJson.getString("subname"));
+                                        JSONObject jsonImage = albumJson.getJSONObject("images");
+                                        //读取【400*300】字符
+                                        String imageurl = StringEscapeUtils.unescapeJava(jsonImage.getString("400*300"));
+                                        album.setHorImgUrl(imageurl);
+                                        list.add(album);
 
+                        }
+                        if(list!=null){
+                            if (list.size()>0 && listener!=null){
+                                listener.OnGetChannelSuccess(list);
+                            }
+                        }else {
+                            ErrorInfo info = buildErrorInfo(url,"doGetChannelAlbumByUrl",null,ErrorInfo.ERROR_TYPE_DATA_CONVERT);
+                            listener.OnGetChannelFail(info);
                         }
                     }
 
 
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    ErrorInfo info = buildErrorInfo(url,"doGetChannelAlbumByUrl",null,ErrorInfo.ERROR_TYPE_PARSE_JSON);
+                    listener.OnGetChannelFail(info);
                 }
 
 
@@ -101,14 +126,7 @@ public class LetvApi extends BaseSiteApi {
 
     }
 
-    private String GetChannelUrl(Channel channel,int pageNum, int pageSize) {
-       if(channel.getChannelId() == Channel.DOCUMENTRY){
-           return String.format(ALBUM_LIST_URL_DOCUMENTARY_FORMAT,ToConvertChannleId(channel),pageNum,pageSize);
-       }else if(channel.getChannelId() == Channel.SHOW){
-           return String.format(ALBUM_LIST_URL_SHOW_FORMAT,ToConvertChannleId(channel),pageNum,pageSize);
-       }
-        return String.format(ALBUM_LIST_URL_FORMAT,ToConvertChannleId(channel),pageNum,pageSize);
-    }
+
 
 
     //自定义频道ID 与真实ID 转换

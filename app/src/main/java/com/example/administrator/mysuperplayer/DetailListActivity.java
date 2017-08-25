@@ -2,6 +2,7 @@ package com.example.administrator.mysuperplayer;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -13,7 +14,9 @@ import com.example.administrator.mysuperplayer.base.BaseActivity;
 import com.example.administrator.mysuperplayer.model.Channel;
 import com.example.administrator.mysuperplayer.model.Site;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by Administrator on 2017/8/18.
@@ -24,6 +27,8 @@ public class DetailListActivity extends BaseActivity {
      public  static  final String TAG ="DetailListActivity";
      private int mChannId;
      private ViewPager mDetailViewPager;
+     String [] mSiteNames = new String[] {"搜狐视频","乐视视频"};
+     private List<String> mDataSet = Arrays.asList(mSiteNames);
     @Override
     protected int getViewId() {
         return R.layout.activity_detail_list;
@@ -42,6 +47,7 @@ public class DetailListActivity extends BaseActivity {
         setTitle(titleName);
        // Log.i(TAG,"--->>>>TitleName="+titleName);
         mDetailViewPager = bindView(R.id.detail_pager);
+
         mDetailViewPager.setAdapter(new SitePagerAdapter(getSupportFragmentManager(),this,mChannId));
 
 

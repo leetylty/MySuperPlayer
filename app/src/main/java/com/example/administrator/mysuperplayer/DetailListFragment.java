@@ -163,7 +163,7 @@ public class DetailListFragment extends BaseFragment {
                 mHandler.post(new Runnable() {
                     @Override
                     public void run() {
-                        emptyView.setText(getActivity().getResources().getString(R.string.data_failed_tip));
+
                         Log.i(TAG,"错误数据监听>>>>");
                     }
                 });
@@ -229,11 +229,22 @@ public class DetailListFragment extends BaseFragment {
                     itemViewHolder.albumTip.setText(album.getTip());
                 }
                 //重新计算宽高
-               Point point = ImageUtil.getVerPotSize(mContext,Columns);
-                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(point.x,point.y);
-                itemViewHolder.albumPost.setLayoutParams(params);
-                if(album.getVerImgUrl()!= null){
-                    ImageUtil.disPlayImage(itemViewHolder.albumPost,album.getVerImgUrl(),point.x,point.y);
+                Point point = null;
+                if (mColumns == 2) {
+                    point = ImageUtil.getHorPotSize(mContext, Columns);
+                    RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(point.x, point.y);
+                    itemViewHolder.albumPost.setLayoutParams(params);
+                } else {
+
+                    point = ImageUtil.getVerPotSize(mContext, Columns);
+                    RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(point.x, point.y);
+                    itemViewHolder.albumPost.setLayoutParams(params);
+                }
+
+                if (album.getVerImgUrl() != null) {
+                    ImageUtil.disPlayImage(itemViewHolder.albumPost, album.getVerImgUrl(), point.x, point.y);
+                } else if (album.getHorImgUrl() != null) {
+                    ImageUtil.disPlayImage(itemViewHolder.albumPost, album.getHorImgUrl(), point.x, point.y);
                 }else {
 
                 }

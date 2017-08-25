@@ -54,6 +54,17 @@ public class ImageUtil {
 
         return  point;
     }
+    public  static Point getHorPotSize (Context context, int columns){
+
+        int width = getScreenWidth(context)/columns;
+        width = (int)width - context.getResources().getDimensionPixelSize(R.dimen.dimen_8dp);
+        int hight = Math.round((float)width/HOR_POSTER_RATIO);
+        Point point = new Point();
+        point.x = width;
+        point.y = hight;
+
+        return  point;
+    }
 
     private static int getScreenWidth(Context context) {
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
