@@ -27,11 +27,11 @@ public class HomePicAdapter extends PagerAdapter {
      };
 
     private int[] DescDrable = new int[]{
-            R.drawable.a,
-            R.drawable.b,
-            R.drawable.c,
-            R.drawable.d,
-            R.drawable.e,
+            R.drawable.yang1,
+            R.drawable.yang2,
+            R.drawable.yang3,
+            R.drawable.yang4,
+            R.drawable.yang5,
     };
 
     public HomePicAdapter(Activity activity) {

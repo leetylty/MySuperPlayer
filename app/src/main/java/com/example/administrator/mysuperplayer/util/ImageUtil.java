@@ -28,7 +28,7 @@ public class ImageUtil {
                          .load(url)//加载图片资源
                          .diskCacheStrategy(DiskCacheStrategy.ALL)//使用缓存
                          .error(R.drawable.ic_loading_hor)//出错时默认的图片
-                         .centerCrop()//设置居中
+                         .fitCenter() //设置居中
                          .override(hight,width)//重写宽高
                          .into(imageView);//加载到view
              }else {

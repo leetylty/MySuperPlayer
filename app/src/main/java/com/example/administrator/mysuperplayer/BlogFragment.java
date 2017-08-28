@@ -18,7 +18,7 @@ public class BlogFragment extends BaseFragment {
      protected WebView mWebView;
      private ProgressBar mProgressBar;
      public static final int PROGRESS_MAX=100;
-     public static final String URL="http://www.lovetaiji.net/";
+     public static final String URL="http://www.taijiquanpingtai.com/";
 
     @Override
     protected int getLayoutId() {
