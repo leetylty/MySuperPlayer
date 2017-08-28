@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,7 +23,7 @@ import com.example.administrator.mysuperplayer.model.Site;
 import com.example.administrator.mysuperplayer.util.ImageUtil;
 
 public class AlbumDetailActivity extends BaseActivity {
-
+    private static final  String TAG = "AlbumDetailActivity";
     private Album mAlbum;
     private boolean isShowDesc;
     private int videoNo;
@@ -91,6 +92,8 @@ public class AlbumDetailActivity extends BaseActivity {
         SiteApi.onGetDetailAlbums(1, mAlbum, new OnGetDetailAlbumsListener() {
             @Override
             public void OnGetDetailSuccess(Album album) {
+                Log.i(TAG,".....Success"+mAlbum.getVideototal());
+                AlbumPlayGridFragment.newInstance(mAlbum,isShowDesc,0);
 
             }
 

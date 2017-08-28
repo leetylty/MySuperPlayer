@@ -8,6 +8,7 @@ import com.example.administrator.mysuperplayer.model.AlbumList;
 import com.example.administrator.mysuperplayer.model.Channel;
 import com.example.administrator.mysuperplayer.model.ErrorInfo;
 import com.example.administrator.mysuperplayer.model.Site;
+import com.example.administrator.mysuperplayer.model.sohu.DetailResult;
 import com.example.administrator.mysuperplayer.model.sohu.Result;
 import com.example.administrator.mysuperplayer.model.sohu.ResultAlbum;
 import com.example.administrator.mysuperplayer.util.OkHttpUtil;
@@ -166,7 +167,7 @@ public class SohuApi extends BaseSiteApi {
                     return;
                 }
                 //DATA
-              Result result =  AppManager.getGson().fromJson(response.body().string(),Result.class);
+              DetailResult result =  AppManager.getGson().fromJson(response.body().string(),DetailResult.class);
               if(result.getmResultAlbum()!=null){
                   if (result.getmResultAlbum().getLastVideoCount()>0){
                       album.setVideototal(result.getmResultAlbum().getLastVideoCount());
@@ -181,6 +182,11 @@ public class SohuApi extends BaseSiteApi {
               }
             }
         });
+
+    }
+
+    //取video信息
+    public void onGetVideoAlbums(Album album, OnGetVideoAlbumsListener listener){
 
     }
 }

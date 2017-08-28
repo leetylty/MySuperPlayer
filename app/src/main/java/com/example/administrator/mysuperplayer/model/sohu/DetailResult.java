@@ -6,16 +6,16 @@ import com.google.gson.annotations.Expose;
  * 搜狐频道数据返回集合
  */
 
-public class Result {
+public class DetailResult {
 
     @Expose
     private  long status;
     @Expose
     private String statusText;
-    //列表页
-    @Expose
-    private Data data ;
 
+    //详情页
+    @Expose
+    private ResultAlbum data ;
 
 
     public long getStatus() {
@@ -34,13 +34,13 @@ public class Result {
         this.statusText = statusText;
     }
 
-    public Data getData() {
+
+    public ResultAlbum getmResultAlbum() {
         return data;
     }
 
-    public void setData(Data data) {
-        this.data = data;
+    public void setmResultAlbum(ResultAlbum mResultAlbum) {
+        this.data = mResultAlbum;
     }
-
 
 }

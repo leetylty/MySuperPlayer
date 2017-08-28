@@ -34,4 +34,16 @@ public  class SiteApi {
                 new SohuApi().onGetDetailAlbums(album,listener);
         }
     }
+
+    public static void onGetVideoAlbums(int siteId , Album album, OnGetVideoAlbumsListener listener) {
+
+        switch (siteId){
+            case Site.LETV:
+                new LetvApi().onGetVideoAlbums(album,listener);
+                break;
+
+            case Site.SOHU:
+                new SohuApi().onGetVideoAlbums(album,listener);
+        }
+    }
 }
