@@ -1,8 +1,7 @@
-package com.example.administrator.mysuperplayer;
+package com.example.administrator.mysuperplayer.Detail;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -10,6 +9,7 @@ import android.support.v4.view.ViewPager;
 import android.view.MenuItem;
 import android.view.ViewGroup;
 
+import com.example.administrator.mysuperplayer.R;
 import com.example.administrator.mysuperplayer.base.BaseActivity;
 import com.example.administrator.mysuperplayer.model.Channel;
 import com.example.administrator.mysuperplayer.model.Site;

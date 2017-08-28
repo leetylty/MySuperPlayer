@@ -35,7 +35,10 @@ public class SohuApi extends BaseSiteApi {
             "sver=6.2.0&sysver=4.4.2&partner=47&page=%s&page_size=%s";
 
     //http://api.tv.sohu.com/v4/album/videos/9112373.json?page=1&page_size=50&order=0&site=1&with_trailer=1&plat=6&poid=1&api_key=9854b2afa779e1a6bff1962447a09dbd&sver=6.2.0&sysver=4.4.2&partner=47
-
+    //http://api.tv.sohu.com/v4/album/info/9112373.json?plat=6&poid=1&api_key=9854b2afa779e1a6bff1962447a09dbd&sver=6.2.0&sysver=4.4.2&partner=47
+    private final static String API_KEY = "plat=6&poid=1&api_key=9854b2afa779e1a6bff1962447a09dbd&sver=6.2.0&sysver=4.4.2&partner=47";
+    private final static String API_ALBUM_INFO = "http://api.tv.sohu.com/v4/album/info/";
+    //http://api.tv.sohu.com/v4/search/channel.json?cid=2&o=1&plat=6&poid=1&api_key=9854b2afa779e1a6bff1962447a09dbd&sver=6.2.0&sysver=4.4.2&partner=47&page=1&page_size=1
 
     @Override
     public void onGetChannelAlbums(Channel channel, int pageNum, int pageSize, OnGetChannelAlbumsListener listener) {
@@ -141,5 +144,43 @@ public class SohuApi extends BaseSiteApi {
                 break;
         }
         return  channelId;
+    }
+
+    public void  onGetDetailAlbums(final Album  album, final OnGetDetailAlbumsListener listener){
+       final String url = API_ALBUM_INFO + album.getAlubmIdl()+".json?"+API_KEY;
+        OkHttpUtil.excute(url, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                if(listener!=null){
+                    ErrorInfo info = buildErrorInfo(url,"onGetDetailAlbums",e,ErrorInfo.ERROR_TYPE_URL);
+                    listener.OnGetDetailFail(info);
+                }
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (!response.isSuccessful()) {
+                    ErrorInfo info = buildErrorInfo(url, "onGetDetailAlbums", null, ErrorInfo.ERROR_TYPE_HTTP);
+                    listener.OnGetDetailFail(info);
+                    return;
+                }
+                //DATA
+              Result result =  AppManager.getGson().fromJson(response.body().string(),Result.class);
+              if(result.getmResultAlbum()!=null){
+                  if (result.getmResultAlbum().getLastVideoCount()>0){
+                      album.setVideototal(result.getmResultAlbum().getLastVideoCount());
+                  }else {
+                      album.setVideototal(result.getmResultAlbum().getLastVideoCount());
+                  }
+
+              }
+              //加载完数据后进行通知
+              if(listener!=null){
+                  listener.OnGetDetailSuccess(album);
+              }
+            }
+        });
+
     }
 }

@@ -12,8 +12,13 @@ public class Result {
     private  long status;
     @Expose
     private String statusText;
+    //列表页
     @Expose
     private Data data ;
+    //详情页
+    @Expose
+    private ResultAlbum mResultAlbum ;
+
 
     public long getStatus() {
         return status;
@@ -38,4 +43,12 @@ public class Result {
     public void setData(Data data) {
         this.data = data;
     }
+    public ResultAlbum getmResultAlbum() {
+        return mResultAlbum;
+    }
+
+    public void setmResultAlbum(ResultAlbum mResultAlbum) {
+        this.mResultAlbum = mResultAlbum;
+    }
+
 }

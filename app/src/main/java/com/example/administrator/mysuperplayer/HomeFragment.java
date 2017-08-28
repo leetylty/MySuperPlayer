@@ -10,6 +10,7 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.administrator.mysuperplayer.Detail.DetailListActivity;
 import com.example.administrator.mysuperplayer.base.BaseFragment;
 import com.example.administrator.mysuperplayer.model.Channel;
 import com.hejunlin.superindicatorlibray.CircleIndicator;

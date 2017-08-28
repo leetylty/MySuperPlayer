@@ -1,4 +1,4 @@
-package com.example.administrator.mysuperplayer;
+package com.example.administrator.mysuperplayer.Detail;
 
 import android.app.Activity;
 import android.content.Context;
@@ -18,6 +18,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.administrator.mysuperplayer.R;
 import com.example.administrator.mysuperplayer.api.OnGetChannelAlbumsListener;
 import com.example.administrator.mysuperplayer.api.SiteApi;
 import com.example.administrator.mysuperplayer.base.BaseFragment;
@@ -246,8 +247,22 @@ public class DetailListFragment extends BaseFragment {
                 } else if (album.getHorImgUrl() != null) {
                     ImageUtil.disPlayImage(itemViewHolder.albumPost, album.getHorImgUrl(), point.x, point.y);
                 }else {
-
+                      //默认图
                 }
+                itemViewHolder.resultContainer.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if(mChannId == Channel.DOCUMENTRY || mChannId == Channel.MOVIE
+                                || mChannId ==Channel.VARITEM || mChannId == Channel.MUSIC
+                                ){
+                            AlbumDetailActivity.launch(getActivity(),album,0,true);
+
+
+                        }else {
+                            AlbumDetailActivity.launch(getActivity(),album);
+                        }
+                    }
+                });
             }
         }
 

@@ -2,6 +2,7 @@ package com.example.administrator.mysuperplayer.api;
 
 import android.content.Context;
 
+import com.example.administrator.mysuperplayer.model.Album;
 import com.example.administrator.mysuperplayer.model.Channel;
 import com.example.administrator.mysuperplayer.model.Site;
 
@@ -20,5 +21,17 @@ public  class SiteApi {
                 new SohuApi().onGetChannelAlbums(new Channel(channelId,context),pageNum,pageSize,listener);
         }
 
+    }
+
+    public static void onGetDetailAlbums(int siteId , Album album, OnGetDetailAlbumsListener listener) {
+
+        switch (siteId){
+            case Site.LETV:
+                new LetvApi().onGetDetailAlbums(album,listener);
+                break;
+
+            case Site.SOHU:
+                new SohuApi().onGetDetailAlbums(album,listener);
+        }
     }
 }

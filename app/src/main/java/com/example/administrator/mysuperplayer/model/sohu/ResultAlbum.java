@@ -16,6 +16,7 @@ public class ResultAlbum {
     @Expose
     private String tvDesc; // 专辑描述
 
+    @SerializedName("director")
     @Expose
     private String director;//导演
 

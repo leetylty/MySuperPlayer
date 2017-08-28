@@ -1,5 +1,6 @@
 package com.example.administrator.mysuperplayer.api;
 
+import com.example.administrator.mysuperplayer.model.Album;
 import com.example.administrator.mysuperplayer.model.Channel;
 
 /**
@@ -9,4 +10,6 @@ import com.example.administrator.mysuperplayer.model.Channel;
 public abstract class BaseSiteApi {
 
    public abstract void onGetChannelAlbums(Channel channel,int pageNum, int pageSize, OnGetChannelAlbumsListener listener);
+
+
 }
